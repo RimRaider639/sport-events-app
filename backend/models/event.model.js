@@ -27,7 +27,6 @@ const eventSchema = mg.Schema({
   endTime: { type: mg.SchemaTypes.Date, required: true },
   description: { type: String, required: true },
   playersLimit: { type: Number, required: true },
-  availableSpots: this.playersLimit - this.joiners.length,
   requirements: {
     type: [String],
     default: ["Anyone interested can apply to join"],

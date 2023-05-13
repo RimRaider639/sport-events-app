@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 function authorise(req, res, next) {
-  const { token } = req.headers.authorisation;
+  const { token } = req.headers;
   if (!token) {
     res.status(401).send({ message: "Please login" });
     return;

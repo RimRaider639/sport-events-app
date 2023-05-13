@@ -11,7 +11,7 @@ eventsRouter.get("/", async (req, res) => {
     if (location) {
       Object.assign(filters, { location: { $regex: location, $option: "i" } });
     }
-    const events = await Event.find(filters);
+    const events = await Event.find(filters).populate("user", "username");
     res.send(events);
     return;
   } catch (error) {

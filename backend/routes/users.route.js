@@ -5,6 +5,10 @@ const User = require("../models/user.model");
 
 const userRouter = require("express").Router();
 
+userRouter.get("/", (req, res) => {
+  res.send({ message: "all users" });
+});
+
 userRouter.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
