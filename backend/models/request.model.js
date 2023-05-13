@@ -3,9 +3,13 @@ const mg = require("mongoose");
 const requestSchema = mg.Schema({
   event: { type: mg.SchemaTypes.ObjectId, required: true, ref: "event" },
   user: { type: mg.SchemaTypes.ObjectId, required: true, ref: "user" },
-  status: { type: String, enum: ["Accepted", "Pending", "Rejected"] },
+  status: {
+    type: String,
+    enum: ["Accepted", "Pending", "Rejected"],
+    default: "Pending",
+  },
   createdAt: { type: mg.SchemaTypes.Date, default: new Date() },
-  expireAt: { type: mg.SchemaTypes.Date, required: true },
+  expireAt: { type: mg.SchemaTypes.Date },
 });
 
 const Request = mg.model("request", requestSchema);
