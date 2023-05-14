@@ -12,5 +12,6 @@ export const getTime = time => {
 };
 
 export const checkElapsed = time => {
-  return getTime(Date.now()) >= getTime(time);
+  console.log(Date.now(), Date.parse(time));
+  return Date.now() >= Date.parse(time);
 };

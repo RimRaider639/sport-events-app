@@ -16,20 +16,20 @@ const Event = () => {
         axios.post(url+"requests/create", {
             event: id,
         }, {
-            headers: {token: localStorage.getItem("sports-app-token")}
+            headers: {token: sessionStorage.getItem("sports-app-token")}
         })
         .then(res=>setRequested(true))
-        .catch(err=>console.log(err))
+        .catch(err=>alert(err?.response?.data?.message || err.message))
     }
     React.useEffect(()=>{
         setEventLoading(true)
-        axios.get(url+`events/${id}`, {headers: {token: localStorage.getItem("sports-app-token")}})
+        axios.get(url+`events/${id}`, {headers: {token: sessionStorage.getItem("sports-app-token")}})
         .then(res=>setEvent(res.data))
         .catch(err=>setEventError(true))
         .finally(()=>setEventLoading(false))
     }, [])
     React.useEffect(()=>{
-        axios.get(url+`requests/hasRequested/${id}`, {headers: {token: localStorage.getItem("sports-app-token")}})
+        axios.get(url+`requests/hasRequested/${id}`, {headers: {token: sessionStorage.getItem("sports-app-token")}})
         .then(res=>setRequested(res.data.hasRequested))
         .catch(err=>console.log(err))
     }, [])
@@ -70,7 +70,7 @@ const Event = () => {
                         
                     </Flex>
                     <Flex>
-                        <Button onClick={onJoin} colorScheme='pink' isDisabled={checkElapsed(event.startTime) || requested}>{checkElapsed(event.startTime)?"Started":checkElapsed(event.endTime)?"Ended":requested?"Requested":"Join"}</Button>
+                        <Button onClick={onJoin} colorScheme='pink' isDisabled={checkElapsed(event.startTime) || requested}>{checkElapsed(event.endTime)?"Ended":checkElapsed(event.startTime)?"Started":requested?"Requested":"Join"}</Button>
                     </Flex>
                 </>:
                 <>Event doesn't exist.</>}
@@ -78,9 +78,9 @@ const Event = () => {
             <Flex direction={"column"} padding={"30px"} gap={"20px"}>
                 <Heading size={"md"}>Joiners</Heading>
                 <Flex direction={"column"} gap={"5px"}>
-                    {event?.joiners?<>
-                        {event.joiners.length?event.joiners.map((j, i)=><Text key={i}>{j.username}</Text>):
-                        <>No participants yet</>}
+                    {event?.joiners?
+                    <>
+                        {event.joiners.map((j, i)=><Text key={i}>{j.username}</Text>)}
                     </>:
                     <>Only participants can see other joiners.</>}
                 </Flex>

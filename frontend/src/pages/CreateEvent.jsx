@@ -34,7 +34,7 @@ const CreateEvent = () => {
     }
     console.log(form)
     setLoading(true)
-    axios.post(url+"events", form, {headers: {token: localStorage.getItem("sports-app-token")}})
+    axios.post(url+"events", form, {headers: {token: sessionStorage.getItem("sports-app-token")}})
     .then(res=>alert(res.data.message))
     .catch(err=>console.log(err))
     .finally(()=>setLoading(false))

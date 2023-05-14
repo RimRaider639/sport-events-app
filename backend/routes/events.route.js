@@ -9,7 +9,7 @@ eventsRouter.get("/", async (req, res) => {
   try {
     let { location, ...filters } = req.query;
     if (location) {
-      Object.assign(filters, { location: { $regex: location, $option: "i" } });
+      Object.assign(filters, { location: { $regex: location, $options: "i" } });
     }
     const events = await Event.find(filters).populate("user", "username");
     res.send(events);
@@ -21,7 +21,11 @@ eventsRouter.get("/", async (req, res) => {
 
 eventsRouter.get("/personal", async (req, res) => {
   try {
-    const events = await Event.find({ user: req.body.user });
+    const events = await Event.find({ user: req.body.user }).populate(
+      "joiners",
+      "username"
+    );
+
     res.send(events);
     return;
   } catch (error) {
@@ -31,12 +35,11 @@ eventsRouter.get("/personal", async (req, res) => {
 
 eventsRouter.get("/:id", async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id).populate(
-      "user",
-      "username"
-    );
+    const event = await Event.findById(req.params.id)
+      .populate("user", "username")
+      .populate("joiners", "username");
     const { joiners, ...rest } = event.toObject();
-    if (joiners.includes(req.body.user)) {
+    if (joiners.map((j) => j._id.toString()).includes(req.body.user)) {
       res.send(event);
       return;
     }

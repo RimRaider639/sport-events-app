@@ -11,11 +11,13 @@ requestsRouter.post("/create", async (req, res) => {
     const { startTime, playersLimit, joiners } = await Event.findById(
       req.body.event
     );
-    if (playersLimit - joiners.length <= 0)
+    if (playersLimit - joiners.length <= 0) {
       res.status(403).send({ message: "Player limit is reached" });
+      return;
+    }
     const newRequest = new Request({ ...req.body, expireAt: startTime });
     await newRequest.save();
-    res.send("Request successfully sent");
+    res.send({ message: "Request successfully sent" });
     return;
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -28,22 +30,25 @@ requestsRouter.get("/:id/accept", async (req, res) => {
       "event",
       "user"
     );
-    if (request.event.user !== req.body.user) {
+    if (request.event.user.toString() !== req.body.user) {
       res.status(401).send({
         message: "Only the event creator is authorised for this operation.",
       });
       return;
     }
-    const { expireAt, event, ...rest } = request;
-    await Request.findByIdAndUpdate(request._id, {
-      ...rest,
-      event: event._id,
-      status: "Accepted",
+    const { expireAt, event, _id, ...rest } = request.toObject();
+    await Request.findOneAndReplace(
+      { _id },
+      {
+        ...rest,
+        event,
+        status: "Accepted",
+      }
+    );
+    await Event.findByIdAndUpdate(event, {
+      $push: { joiners: request.user._id },
     });
-    await Event.findByIdAndUpdate(request.event, {
-      joiners: { $push: request.user },
-    });
-    res.send("Request successfully accepted");
+    res.send({ message: "Request successfully accepted" });
     return;
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -56,19 +61,17 @@ requestsRouter.get("/:id/reject", async (req, res) => {
       "event",
       "user"
     );
-    if (request.event.user !== req.body.user) {
+    if (request.event.user.toString() !== req.body.user) {
       res.status(401).send({
         message: "Only the event creator is authorised for this operation.",
       });
       return;
     }
-    const { expireAt, event, ...rest } = request;
-    await Request.findByIdAndUpdate(request._id, {
-      ...rest,
-      event: event._id,
+    const { expireAt, _id, ...rest } = request.toObject();
+    await Request.findByIdAndUpdate(_id, {
       status: "Rejected",
     });
-    res.send("Request successfully rejected");
+    res.send({ message: "Request successfully rejected" });
     return;
   } catch (error) {
     res.status(500).send({ message: error.message });
@@ -79,7 +82,22 @@ requestsRouter.get("/:eventID", async (req, res) => {
   try {
     const requests = await Request.find({
       event: req.params.eventID,
-    });
+      ...req.query,
+    }).populate("user", "username");
+    res.send(requests);
+    return;
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+requestsRouter.get("/", async (req, res) => {
+  try {
+    const requests = await Request.find({
+      user: req.body.user,
+    })
+      .populate("event", "title location startTime endTime")
+      .sort({ createdAt: 1 });
     res.send(requests);
     return;
   } catch (error) {

@@ -5,6 +5,8 @@ import Auth from '../pages/Auth'
 import PrivateRouter from './PrivateRouter'
 import CreateEvent from '../pages/CreateEvent'
 import Event from '../pages/Event'
+import Requests from '../pages/Requests'
+import MyEvents from '../pages/MyEvents'
 
 const AllRoutes = () => {
   return (
@@ -18,6 +20,12 @@ const AllRoutes = () => {
         </PrivateRouter>}/>
         <Route path="/event/:id" element={<PrivateRouter>
           <Event/>
+        </PrivateRouter>}/>
+        <Route path="/requests" element={<PrivateRouter>
+          <Requests/>
+        </PrivateRouter>}/>
+        <Route path="/myEvents" element={<PrivateRouter>
+          <MyEvents/>
         </PrivateRouter>}/>
     </Routes>
   )

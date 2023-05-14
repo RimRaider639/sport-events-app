@@ -27,7 +27,7 @@ const Login = () => {
         setLoading(true)
         axios.post(url+"users/login", form)
         .then(res=>{
-            localStorage.setItem("sports-app-token", res.data.token)
+            sessionStorage.setItem("sports-app-token", res.data.token)
             alert(res.data.message)
             navigate("/")
         })
