@@ -19,13 +19,23 @@ eventsRouter.get("/", async (req, res) => {
   }
 });
 
+eventsRouter.get("/personal", async (req, res) => {
+  try {
+    const events = await Event.find({ user: req.body.user });
+    res.send(events);
+    return;
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
 eventsRouter.get("/:id", async (req, res) => {
   try {
     const event = await Event.findById(req.params.id).populate(
       "user",
       "username"
     );
-    const { joiners, ...rest } = event;
+    const { joiners, ...rest } = event.toObject();
     if (joiners.includes(req.body.user)) {
       res.send(event);
       return;
