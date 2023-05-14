@@ -10,6 +10,10 @@ const activeStyle = {
 
 const Navbar = () => {
     const navigate = useNavigate()
+    const logout = () => {
+      sessionStorage.removeItem("sports-app-token")
+      navigate("/auth")
+    }
   return (
     <Flex bgColor={"purple.400"} align={"center"} justify={"space-between"} padding={"20px"}>
       <Flex gap={"20px"}>
@@ -19,6 +23,7 @@ const Navbar = () => {
         <NavLink style={({isActive})=>isActive?activeStyle:{color:"white"}} to={"/auth"}>Login/Register</NavLink>
       </Flex>
       <Flex gap={"20px"} align={"center"}>
+        <Button onClick={logout} size={"sm"}>Logout</Button>
         <Button onClick={()=>navigate("/createEvent")} size={"sm"}>Create Event</Button>
         <ColorModeSwitcher/>
       </Flex>
