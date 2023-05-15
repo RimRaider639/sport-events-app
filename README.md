@@ -2,7 +2,7 @@
 
 **Authentication | Dark Mode Support**
 
-This website let's you find sports event according to your preffered sports and location. You can request to join an event and the event manager can either accept or reject your request. If you become a participant, you can view other participants.
+This website lets you find sports event according to your preffered sports and location. You can request to join an event and the event manager can either accept or reject your request. If you become a participant, you can view other participants.
 
 [Frontend live](https://frontend-mu-topaz.vercel.app/)
 
