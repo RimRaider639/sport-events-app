@@ -14,7 +14,7 @@ This website lets you find sports event according to your preffered sports and l
 - Find the appropriate event you're interested in.
 
 ## Pages
-### Auth 
+### Authentication 
 - Other pages cannot be accessed without logging in.
 
 ![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/1067f650-dbdb-4acf-a6fc-b4cf75d1b8f1)
