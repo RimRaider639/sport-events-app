@@ -45,7 +45,7 @@ This website lets you find sports event according to your preffered sports and l
 ### Your Events
 - View all the events you have posted, the requests you've got for joining it, and the joiners.
 - Pending requests for an event that has started won't be visible.
-- 
+
 ![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/fd122e5f-032f-48cf-a8a6-71d166970ec9)
 
 ### Create Event
