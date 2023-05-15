@@ -28,6 +28,7 @@ This website let's you find sports event according to your preffered sports and 
 ### Event Details
 - View details about the even and request to join. If the request is accepted and you become the joiner, you get the following view, where you can see other participants.
 - It indicates whether the event has started or ended, after which you cannot request to join.
+- You cannot join once the player limit is reached.
 
 ![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/0bc75b28-fc5c-4845-8b9a-dabfc2d10c99)
 
