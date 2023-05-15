@@ -19,17 +19,30 @@ This website let's you find sports event according to your preffered sports and 
 
 ### Home
 - View different events, filter them according to sport or location.
+- It indicates whether the event has started or ended.
 
 ![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/a0fefce8-1df2-482d-b1e4-78e1d9251396)
 
+### Event Details
+- View details about the even and request to join. If the request is accepted and you become the joiner, you get the following view, where you can see other participants.
+- It indicates whether the event has started or ended, after which you cannot request to join.
+
+![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/0b7ad272-55e9-4c21-a407-50cc80503b2e)
+
+- If you are not a participant yet, you get the following view.
+
+![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/888b8365-a16f-40c4-b5b6-c96a92dc8a62)
+
 ### Requests
-- View all the accepted, pending and rejected requests you've made. Pending requests for an event that has started won't be visible.
+- View all the accepted, pending and rejected requests you've made. 
+- Pending requests for an event that has started won't be visible.
  
 ![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/81edfd6d-ad31-4323-b511-6b134ea1a627)
 
 ### Your Events
 - View all the events you have posted, the requests you've got for joining it, and the joiners.
-
+- Pending requests for an event that has started won't be visible.
+- 
 ![image](https://github.com/RimRaider639/sport-events-app/assets/112859531/68521870-e909-4d01-82f8-42f497b76fea)
 
 ### Create Event
