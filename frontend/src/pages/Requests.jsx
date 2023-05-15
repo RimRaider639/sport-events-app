@@ -26,21 +26,24 @@ const Requests = () => {
             <>
                 {requests.map((r, i)=>{
                     const {event, status} = r
-                    return <Flex cursor={"pointer"} _hover={{bgColor: "purple.100"}} onClick={()=>navigate(`/event/${event._id}`)} key={i} justify={"space-between"} border={"1px solid purple"} borderRadius={"10px"} padding={"20px"}>
-                        <Flex direction={"column"}>
-                            <Text fontWeight={600}>{event.title}</Text>
-                            <Text>{event.sport}</Text>
-                            <Flex align={"center"} gap={"5px"}>
-                                <HiLocationMarker/>
-                                <Text>{event.location}</Text>
+                    return <>
+                        {(r.status==="Pending" && checkElapsed(r.expireAt))?<></>:
+                        <Flex cursor={"pointer"} _hover={{bgColor: "purple.100"}} onClick={()=>navigate(`/event/${event._id}`)} key={i} justify={"space-between"} border={"1px solid purple"} borderRadius={"10px"} padding={"20px"}>
+                            <Flex direction={"column"}>
+                                <Text fontWeight={600}>{event.title}</Text>
+                                <Text>{event.sport}</Text>
+                                <Flex align={"center"} gap={"5px"}>
+                                    <HiLocationMarker/>
+                                    <Text>{event.location}</Text>
+                                </Flex>
+                                <Text>{getDate(event.startTime)}</Text>
+                                <Text>{checkElapsed(event.endTime)?"Ended":checkElapsed(event.startTime)?"Started":getTime(event.startTime) + " to " + getTime(event.endTime)}</Text>
                             </Flex>
-                            <Text>{getDate(event.startTime)}</Text>
-                            <Text>{checkElapsed(event.startTime)?"Started":checkElapsed(event.endTime)?"Ended":getTime(event.startTime) + " to " + getTime(event.endTime)}</Text>
-                        </Flex>
-                        <Flex align={"center"}>
-                            <Badge variant="outline" colorScheme={status==="Pending"?"orange":status==="Accepted"?"green":"red"}>{status}</Badge>
-                        </Flex>
-                    </Flex>
+                            <Flex align={"center"}>
+                                <Badge variant="outline" colorScheme={status==="Pending"?"orange":status==="Accepted"?"green":"red"}>{status}</Badge>
+                            </Flex>
+                        </Flex>}
+                    </>
                 })}
             </>
         }

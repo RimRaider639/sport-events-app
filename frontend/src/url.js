@@ -1,2 +1,2 @@
-const url = 'http://localhost:8080/';
+const url = 'https://watery-massive-catfish.glitch.me/';
 export default url;

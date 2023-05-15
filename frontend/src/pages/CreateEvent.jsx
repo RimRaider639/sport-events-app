@@ -1,4 +1,5 @@
 import { Flex, Input, Select, Textarea, Text, Button } from '@chakra-ui/react'
+import {useNavigate} from 'react-router'
 import React from 'react'
 import axios from 'axios'
 import url from '../url'
@@ -17,6 +18,7 @@ const initForm = {
 const CreateEvent = () => {
   const [form, setForm] = React.useState(initForm)
   const [loading, setLoading] = React.useState(false)
+  const navigate = useNavigate()
   const onChange = (e) => {
     if (e.target.name==="requirements"){
       setForm({...form, requirements: e.target.value.split(", ")})
@@ -35,7 +37,10 @@ const CreateEvent = () => {
     console.log(form)
     setLoading(true)
     axios.post(url+"events", form, {headers: {token: sessionStorage.getItem("sports-app-token")}})
-    .then(res=>alert(res.data.message))
+    .then(res=>{
+      alert(res.data.message)
+      navigate("/myEvents")
+    })
     .catch(err=>console.log(err))
     .finally(()=>setLoading(false))
   }

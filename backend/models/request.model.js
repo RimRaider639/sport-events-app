@@ -9,8 +9,10 @@ const requestSchema = mg.Schema({
     default: "Pending",
   },
   createdAt: { type: mg.SchemaTypes.Date, default: new Date() },
-  expireAt: { type: mg.SchemaTypes.Date },
+  expireAt: { type: mg.SchemaTypes.Date, expires: 0 },
 });
+
+requestSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
 
 const Request = mg.model("request", requestSchema);
 

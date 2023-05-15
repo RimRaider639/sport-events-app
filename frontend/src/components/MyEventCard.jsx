@@ -45,7 +45,6 @@ const MyEventCard = ({event}) => {
     React.useEffect(()=>{
         fetchRequests()
     }, [])
-    console.log(requests)
   return (
     <Flex padding={"20px"} fontSize={"14px"} gap={"20px"} width={"100%"}>
         <Flex direction={"column"} flex={2}>
@@ -78,11 +77,14 @@ const MyEventCard = ({event}) => {
             {loading?<>Loading...</>:
             error?<>Error occured, please refresh</>:
             <>
-                {requests.map((r, i)=><Flex key={i} gap={"5px"}>
+                {requests.map((r, i)=>{
+                return <>
+                {(r.status==="Pending" && checkElapsed(r.expireAt))?<></>:<Flex key={i} gap={"5px"}>
                     <Text flex={2}>{r.user.username}</Text>
                     <IconButton onClick={()=>onAccept(r.user, r._id)} colorScheme='green' icon={<AiOutlineCheck/>} flex={0.5} size={"xs"}>Accept</IconButton>
                     <IconButton onClick={()=>onReject(r.user, r._id)} colorScheme='red' icon={<MdClose/>} flex={0.5} size={"xs"}>Reject</IconButton>
-                </Flex>)}
+                </Flex>}
+                </>})}
             </>}
         </Flex>
     </Flex>
